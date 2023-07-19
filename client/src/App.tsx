@@ -1,57 +1,32 @@
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-import "./styles/Home.css";
-// Default styles that can be overridden by your app
-require("@solana/wallet-adapter-react-ui/styles.css");
+import { Routes, Route } from "react-router-dom"
+/* Pages */
+import Home from "./pages/Home"
+import Profile from "./pages/Profile"
+import CampaignCreate from "./pages/CampaignCreate"
+import CampaignDetails from "./pages/CampaignDetails"
+/* Components */
+import Sidebar from "./components/Sidebar"
+import Navbar from "./components/Navbar"
 
-const Home = () => {
-  // Here's how to get the thirdweb SDK instance
-  // const sdk = useSDK();
-  // Here's how to get a nft collection
-  // const { data: program } = useProgram(
-  //   your_nft_collection_address,
-  //   "nft-collection"
-  // );
-
+function App() {
   return (
-    <>
-      <div className="container">
-        <div className="iconContainer">
-          <img
-            src="/thirdweb.svg"
-            height={75}
-            width={115}
-            alt="thirdweb"
-            className="icon"
-          />
-          <img
-            width={75}
-            height={75}
-            src="/sol.png"
-            className="icon"
-            alt="sol"
-          />
-        </div>
-        <h1 className="h1">Solana, meet thirdweb 👋</h1>
-        <p className="explain">
-          Explore what you can do with thirdweb&rsquo;s brand new{" "}
-          <b>
-            <a
-              href="https://portal.thirdweb.com/solana"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="lightPurple"
-            >
-              Solana SDK
-            </a>
-          </b>
-          .
-        </p>
-        <div className="button-container">
-          <WalletMultiButton style={{}} />
-        </div>
+    <div className="relative sm:-8 p-4 bg-[#13131a] min-h-screen flex flex-row">
+      <div className="sm:flex hidden mr-10 relative">
+        <Sidebar />
       </div>
-    </>
-  );
-};
 
-export default Home;
+      <div className="flex-1 max-sm:w-full max-w-[1280px] mx-auto sm:pr-5">
+        <Navbar />
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/create-campaign" element={<CampaignCreate />} />
+          <Route path="/campaign-details/:id" element={<CampaignDetails />} />
+        </Routes>
+      </div>
+    </div>
+  )
+}
+
+export default App
