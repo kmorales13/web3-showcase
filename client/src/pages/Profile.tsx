@@ -9,21 +9,21 @@ function Profile() {
   const { address, contract, getMyCampaigns } = useStateContext()
 
   useEffect(() => {
+    async function fetchCampaigns() {
+      setIsLoading(true)
+      const data = await getMyCampaigns?.()
+      if (data) {
+        setCampaigns(data)
+      } else {
+        console.error("Couldn't fetch user campaigns")
+      }
+      setIsLoading(false)
+    }
+
     if (address && contract) {
       fetchCampaigns()
     }
-  }, [address, contract, fetchCampaigns])
-
-  async function fetchCampaigns() {
-    setIsLoading(true)
-    const data = await getMyCampaigns?.()
-    if (data) {
-      setCampaigns(data)
-    } else {
-      console.error("Couldn't fetch user campaigns")
-    }
-    setIsLoading(false)
-  }
+  }, [address, contract])
 
   return (
     <DisplayCampaigns

@@ -9,21 +9,21 @@ function Home() {
   const { address, contract, getCampaigns } = useStateContext()
 
   useEffect(() => {
+    async function fetchCampaigns() {
+      setIsLoading(true)
+      const data = await getCampaigns?.()
+      if (data) {
+        setCampaigns(data)
+      } else {
+        console.error("Couldn't fetch user campaigns")
+      }
+      setIsLoading(false)
+    }
+
     if (address && contract) {
       fetchCampaigns()
     }
-  }, [address, contract, fetchCampaigns])
-
-  async function fetchCampaigns() {
-    setIsLoading(true)
-    const data = await getCampaigns?.()
-    if (data) {
-      setCampaigns(data)
-    } else {
-      console.error("Couldn't fetch campaigns")
-    }
-    setIsLoading(false)
-  }
+  }, [address, contract])
 
   return (
     <DisplayCampaigns
