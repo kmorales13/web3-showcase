@@ -27,7 +27,7 @@ function Profile() {
 
   return (
     <DisplayCampaigns
-      title="My Campaigns"
+      title={address ? "My Campaigns" : "Connect to your wallet to view your campaigns"}
       isLoading={isLoading}
       campaigns={campaigns}
     />

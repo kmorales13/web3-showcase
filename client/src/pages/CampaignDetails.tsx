@@ -10,7 +10,7 @@ import CountBox from '../components/CountBox'
 function CampaignDetails() {
   const { state } = useLocation()
   const navigate = useNavigate()
-  const { donateToCampaign, getDonations, contract, address } = useStateContext()
+  const { donateToCampaign, getDonations, contract } = useStateContext()
 
   const [isLoading, setIsLoading] = useState(false)
   const [amount, setAmount] = useState('')
@@ -24,10 +24,10 @@ function CampaignDetails() {
       setDonators(data)
     }
 
-    if (address && contract) {
+    if (contract) {
       fetchDonators()
     }
-  }, [address, contract, getDonations, state.pId])
+  }, [contract, getDonations, state.pId])
 
   async function handleDonate() {
     setIsLoading(true)

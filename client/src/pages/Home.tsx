@@ -6,7 +6,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [campaigns, setCampaigns] = useState<any>([])
 
-  const { address, contract, getCampaigns } = useStateContext()
+  const { contract, getCampaigns } = useStateContext()
 
   useEffect(() => {
     async function fetchCampaigns() {
@@ -20,10 +20,10 @@ function Home() {
       setIsLoading(false)
     }
 
-    if (address && contract) {
+    if (contract) {
       fetchCampaigns()
     }
-  }, [address, contract, getCampaigns])
+  }, [contract, getCampaigns])
 
   return (
     <DisplayCampaigns
