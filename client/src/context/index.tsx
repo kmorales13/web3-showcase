@@ -1,13 +1,25 @@
 import { SmartContract, useAddress, useContract, useContractWrite, useMetamask } from "@thirdweb-dev/react"
 import { createContext, useContext } from "react"
-import type { BaseContract } from "ethers"
-import type { MetaMaskWallet } from "@thirdweb-dev/wallets"
+import { ethers, type BaseContract } from "ethers"
+
+export interface Campaign {
+  owner: string
+  title: string
+  description: string
+  target: ethers.BigNumber
+  deadline: ethers.BigNumber
+  amountCollected: ethers.BigNumber
+  image: string
+  pId: number
+}
 
 type TStateContext = {
   address?: string
   contract?: SmartContract<BaseContract>
   connect?: () => void
   createCampaign?: (form: any) => Promise<void>
+  getCampaigns?: () => Promise<any[]>
+  getMyCampaigns?: () => Promise<any[]>
 }
 
 const initialState = {
@@ -56,8 +68,30 @@ export function StateContextProvider({ children }: StateContextProviderProps) {
     }
   }
 
+  async function getCampaigns() {
+    const campaigns: Campaign[] = await contract?.call("getCampaigns")
+
+    const parsedCampaigns = campaigns.map((campaign: Campaign, idx: number) => ({
+      owner: campaign.owner,
+      title: campaign.title,
+      description: campaign.description,
+      target: ethers.utils.formatEther(campaign.target.toString()),
+      deadline: campaign.deadline.toNumber(),
+      amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
+      image: campaign.image,
+      pId: idx,
+    }))
+
+    return parsedCampaigns
+  }
+
+  async function getMyCampaigns() {
+    const allCampaigns = await getCampaigns()
+    return allCampaigns.filter(campaign => campaign.owner === address)
+  }
+
   return (
-    <StateContext.Provider value={{ address, connect, contract, createCampaign: publishCampaign }}>
+    <StateContext.Provider value={{ address, connect, contract, createCampaign: publishCampaign, getCampaigns, getMyCampaigns }}>
       {children}
     </StateContext.Provider>
   )

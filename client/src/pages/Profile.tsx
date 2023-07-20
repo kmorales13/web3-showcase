@@ -1,7 +1,34 @@
+import { useState, useEffect } from "react"
+import { useStateContext } from "../context"
+import DisplayCampaigns from "../components/DisplayCampaigns"
 
 function Profile() {
+  const [isLoading, setIsLoading] = useState(false)
+  const [campaigns, setCampaigns] = useState<any>([])
+
+  const { address, contract, getMyCampaigns } = useStateContext()
+
+  useEffect(() => {
+    if (contract) fetchCampaigns()
+  }, [address, contract])
+
+  async function fetchCampaigns() {
+    setIsLoading(true)
+    const data = await getMyCampaigns?.()
+    if (data) {
+      setCampaigns(data)
+    } else {
+      console.error("Couldn't fetch user campaigns")
+    }
+    setIsLoading(false)
+  }
+
   return (
-    <div>Profile</div>
+    <DisplayCampaigns
+      title="My Campaigns"
+      isLoading={isLoading}
+      campaigns={campaigns}
+    />
   )
 }
 
