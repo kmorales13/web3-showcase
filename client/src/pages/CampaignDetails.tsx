@@ -10,7 +10,7 @@ import CountBox from '../components/CountBox'
 function CampaignDetails() {
   const { state } = useLocation()
   const navigate = useNavigate()
-  const { donateToCampaign, getDonations, contract } = useStateContext()
+  const { address, connect, donateToCampaign, getDonations, contract } = useStateContext()
 
   const [isLoading, setIsLoading] = useState(false)
   const [amount, setAmount] = useState('')
@@ -126,9 +126,9 @@ function CampaignDetails() {
 
               <StyledButton
                 btnType="button"
-                title="Fund Campaign"
+                title={address ? "Fund Campaign" : "Connect Wallet"}
                 styles="w-full bg-[#8c6dfd]"
-                handleClick={handleDonate}
+                handleClick={address ? handleDonate : connect}
               />
             </div>
           </div>
