@@ -22,6 +22,7 @@ function CampaignCreate() {
   })
 
   function handleFormFieldChange(fieldName: string, e: React.ChangeEvent) {
+    console.log((e.target as HTMLInputElement).value)
     setForm({ ...form, [fieldName]: (e.target as HTMLInputElement).value })
   }
 

@@ -17,7 +17,7 @@ function DisplayCampaigns({ title, isLoading, campaigns }: DisplayCampaignsProps
 
   return (
     <div>
-      <h1 className="font-epilogue font-semibold text-[18px] text-white text-left">{title} ({campaigns.length})</h1>
+      <h1 className="font-epilogue font-semibold text-[18px] text-white text-left">{title} ({campaigns.length - 1})</h1>
 
       <div className="flex flex-wrap mt-[20px] gap-[26px]">
         {isLoading && (
@@ -30,11 +30,13 @@ function DisplayCampaigns({ title, isLoading, campaigns }: DisplayCampaignsProps
           </p>
         )}
 
-        {!isLoading && campaigns.length > 0 && campaigns.map((campaign: any) => <FundCard
-          key={campaign.pId}
-          {...campaign}
-          handleClick={() => handleNavigate(campaign)}
-        />)}
+        {!isLoading && campaigns.length > 0 && campaigns.map((campaign: any) =>
+          campaign.pId === 0 ? null : // don't display test campaign
+            <FundCard
+              key={campaign.pId}
+              {...campaign}
+              handleClick={() => handleNavigate(campaign)}
+            />)}
       </div>
     </div>
   )

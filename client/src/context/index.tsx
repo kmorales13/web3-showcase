@@ -58,7 +58,7 @@ export function StateContextProvider({ children }: StateContextProviderProps) {
           form.title,
           form.description,
           form.target,
-          new Date(form.deadline).getTime,
+          new Date(form.deadline).getTime(),
           form.image,
         ]
       })
@@ -103,7 +103,7 @@ export function StateContextProvider({ children }: StateContextProviderProps) {
   }
 
   async function donateToCampaign(pId: number, amount: string) {
-    const data = await contract?.call("donateToCampaign", [pId, address, amount])
+    const data = await contract?.call("donateToCampaign", [pId], { value: ethers.utils.parseEther(amount) })
 
     return data
   }
