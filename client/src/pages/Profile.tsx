@@ -9,8 +9,10 @@ function Profile() {
   const { address, contract, getMyCampaigns } = useStateContext()
 
   useEffect(() => {
-    if (contract) fetchCampaigns()
-  }, [address, contract])
+    if (address && contract) {
+      fetchCampaigns()
+    }
+  }, [address, contract, fetchCampaigns])
 
   async function fetchCampaigns() {
     setIsLoading(true)

@@ -25,10 +25,10 @@ function CampaignDetails() {
   }
 
   useEffect(() => {
-    if (contract) {
+    if (address && contract) {
       fetchDonators()
     }
-  }, [contract, address])
+  }, [ address,contract, fetchDonators])
 
   const handleDonate = async () => {
     setIsLoading(true)
