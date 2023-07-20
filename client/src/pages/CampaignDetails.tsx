@@ -42,6 +42,10 @@ function CampaignDetails() {
     <div>
       {isLoading && <Loader />}
 
+      <div className="w-full flex mt-10 gap-[30px]">
+        <h1 className="text-white text-[26px] font-bold">{state.title}</h1>
+      </div>
+
       <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
         <div className="flex-1 flex-col">
           <img src={state.image} alt="campaign" className="w-full h-[410px] object-cover rounded-xl" />
@@ -87,9 +91,9 @@ function CampaignDetails() {
 
             <div className="mt-[20px] flex flex-col gap-4">
               {donators.length > 0 ? donators.map((item: any, index: number) => (
-                <div key={`${item.donator}-${index}`} className="flex justify-between items-center gap-4">
-                  <p className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">{index + 1}. {item.donator}</p>
-                  <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p>
+                <div key={`${item.donator}-${index}`} className="flex justify-between md:items-center md:gap-4">
+                  <p className="font-epilogue font-normal text-[12px] md:text-[14px] text-[#b2b3bd] leading-[26px] break-ll">{index + 1}. {item.donator}</p>
+                  <p className="font-epilogue font-normal text-[10px] text-[#808191] leading-[26px] break-ll">{item.donation}</p>
                 </div>
               )) : (
                 <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No donators yet. Be the first one!</p>
