@@ -60,7 +60,6 @@ export function StateContextProvider({ children }: StateContextProviderProps) {
           form.target,
           new Date(form.deadline).getTime,
           form.image,
-          form.title,
         ]
       })
 
