@@ -20,6 +20,8 @@ type TStateContext = {
   createCampaign?: (form: any) => Promise<void>
   getCampaigns?: () => Promise<any[]>
   getMyCampaigns?: () => Promise<any[]>
+  getDonations?: (pId: number) => Promise<any>
+  donateToCampaign?: (pId: number, amount: string) => Promise<any>
 }
 
 const initialState = {
@@ -42,7 +44,7 @@ export function StateContextProvider({ children }: StateContextProviderProps) {
 
   function connect() {
     try {
-      connectMetaMask()
+      connectMetaMask().catch(err => console.error("connectMetaMask", err))
     } catch (err) {
       console.error("connectMetaMask", err)
     }
@@ -90,8 +92,25 @@ export function StateContextProvider({ children }: StateContextProviderProps) {
     return allCampaigns.filter(campaign => campaign.owner === address)
   }
 
+  async function getDonations(pId: number) {
+    const donations = await contract?.call("getDonators", [pId])
+
+    const parsedDonations = donations[0].map((donator: any, idx: number) => ({
+      donator,
+      donation: ethers.utils.formatEther(donations[0][idx].toString())
+    }))
+
+    return parsedDonations
+  }
+
+  async function donateToCampaign(pId: number, amount: string) {
+    const data = await contract?.call("donateToCampaign", [pId, address, amount])
+
+    return data
+  }
+
   return (
-    <StateContext.Provider value={{ address, connect, contract, createCampaign: publishCampaign, getCampaigns, getMyCampaigns }}>
+    <StateContext.Provider value={{ address, connect, contract, createCampaign: publishCampaign, getCampaigns, getMyCampaigns, getDonations, donateToCampaign }}>
       {children}
     </StateContext.Provider>
   )
