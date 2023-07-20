@@ -27,7 +27,7 @@ function CampaignDetails() {
     if (address && contract) {
       fetchDonators()
     }
-  }, [address, contract])
+  }, [address, contract, getDonations, state.pId])
 
   async function handleDonate() {
     setIsLoading(true)

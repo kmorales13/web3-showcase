@@ -23,7 +23,7 @@ function Home() {
     if (address && contract) {
       fetchCampaigns()
     }
-  }, [address, contract])
+  }, [address, contract, getCampaigns])
 
   return (
     <DisplayCampaigns

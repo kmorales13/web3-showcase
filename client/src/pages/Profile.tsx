@@ -23,7 +23,7 @@ function Profile() {
     if (address && contract) {
       fetchCampaigns()
     }
-  }, [address, contract])
+  }, [address, contract, getMyCampaigns])
 
   return (
     <DisplayCampaigns
