@@ -16,23 +16,29 @@ function CampaignDetails() {
   const [amount, setAmount] = useState('')
   const [donators, setDonators] = useState<any>([])
 
-  const remainingDays = daysLeft(state.deadline)
-
   useEffect(() => {
     async function fetchDonators() {
-      const data = await getDonations?.(state.pId)
+      const data = await getDonations?.(state?.pId)
       setDonators(data)
     }
 
     if (contract) {
       fetchDonators()
     }
-  }, [contract, getDonations, state.pId])
+  }, [contract, getDonations, state?.pId])
+
+  if (!state) {
+    navigate('/')
+  }
+
+  const remainingDays = daysLeft(state?.deadline)
 
   async function handleDonate() {
+    if (!amount) return
+
     setIsLoading(true)
 
-    await donateToCampaign?.(state.pId, amount)
+    await donateToCampaign?.(state?.pId, amount)
 
     navigate('/')
     setIsLoading(false)
@@ -43,21 +49,21 @@ function CampaignDetails() {
       {isLoading && <Loader />}
 
       <div className="w-full flex mt-10 gap-[30px]">
-        <h1 className="text-white text-[26px] font-bold">{state.title}</h1>
+        <h1 className="text-white text-[26px] font-bold">{state?.title}</h1>
       </div>
 
       <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
         <div className="flex-1 flex-col">
-          <img src={state.image} alt="campaign" className="w-full h-[410px] object-cover rounded-xl" />
+          <img src={state?.image} alt="campaign" className="w-full h-[410px] object-cover rounded-xl" />
           <div className="relative w-full h-[5px] bg-[#3a3a43] mt-2">
-            <div className="absolute h-full bg-[#4acd8d]" style={{ width: `${calculateBarPercentage(state.target, state.amountCollected)}%`, maxWidth: '100%' }}>
+            <div className="absolute h-full bg-[#4acd8d]" style={{ width: `${calculateBarPercentage(state?.target, state?.amountCollected)}%`, maxWidth: '100%' }}>
             </div>
           </div>
         </div>
 
         <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
           <CountBox title="Days Left" value={remainingDays} />
-          <CountBox title={`Raised of ${state.target}`} value={state.amountCollected} />
+          <CountBox title={`Raised of ${state?.target}`} value={state?.amountCollected} />
           <CountBox title="Total Backers" value={donators.length} />
         </div>
       </div>
@@ -72,7 +78,7 @@ function CampaignDetails() {
                 <img src={thirdweb} alt="user" className="w-[60%] h-[60%] object-contain" />
               </div>
               <div>
-                <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">{state.owner}</h4>
+                <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">{state?.owner}</h4>
                 <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">10 Campaigns</p>
               </div>
             </div>
@@ -82,7 +88,7 @@ function CampaignDetails() {
             <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Story</h4>
 
             <div className="mt-[20px]">
-              <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">{state.description}</p>
+              <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">{state?.description}</p>
             </div>
           </div>
 
