@@ -7,4 +7,4 @@
 - React
 - TailwindCSS
 
-Demo: https://master--delicate-fairy-a4c93e.netlify.app/
+Demo: https://delicate-fairy-a4c93e.netlify.app/
